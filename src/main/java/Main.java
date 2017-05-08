@@ -13,6 +13,7 @@ public class Main {
         world.addCountry(new Country("Portigal", 1, 1, 2, 2));
         world.createRoutes();
         System.out.println(world);
+        world.simulate();
 
     }
 }

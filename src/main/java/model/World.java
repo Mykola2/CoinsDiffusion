@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class World {
     List<Country> countries = new ArrayList<>();
 
+
     public void addCountry(Country country) {
         countries.add(country);
     }
@@ -26,21 +27,33 @@ public class World {
         //non-optimized n^2 traverse
         //todo: optimize
         for (City city : allCities) {
-            for (City anotherCity: allCities) {
-                if ((city.getX() - 1 == anotherCity.getX()) && (city.getY()  == anotherCity.getY())){
+            for (City anotherCity : allCities) {
+                if ((city.getX() - 1 == anotherCity.getX()) && (city.getY() == anotherCity.getY())) {
                     city.setWestN(anotherCity);
                 }
-                if ((city.getX() + 1 == anotherCity.getX()) && (city.getY()  == anotherCity.getY())){
+                if ((city.getX() + 1 == anotherCity.getX()) && (city.getY() == anotherCity.getY())) {
                     city.setEastN(anotherCity);
                 }
-                if ((city.getX() == anotherCity.getX()) && (city.getY() + 1  == anotherCity.getY())){
+                if ((city.getX() == anotherCity.getX()) && (city.getY() + 1 == anotherCity.getY())) {
                     city.setNorthN(anotherCity);
                 }
-                if ((city.getX()  == anotherCity.getX()) && (city.getY() - 1  == anotherCity.getY())){
+                if ((city.getX() == anotherCity.getX()) && (city.getY() - 1 == anotherCity.getY())) {
                     city.setSouthN(anotherCity);
                 }
             }
         }
 
     }
+
+    public void simulate() {
+        while (true) {
+            countries.forEach(c -> c.startSimulator(countries));
+            if(countries.stream().allMatch(Country::getIsComplete)){
+                break;
+            }
+        }
+
+        countries.forEach(country -> System.out.println(country.getName() + ":" + country.getDays()));
+    }
+
 }
