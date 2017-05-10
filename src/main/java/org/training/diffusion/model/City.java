@@ -1,4 +1,4 @@
-package model;
+package org.training.diffusion.model;
 
 import lombok.Data;
 
@@ -38,7 +38,7 @@ public class City {
                 '}';
     }
 
-    public void dailyTrarnsfer(List<Country> countryList) {
+    public void dailyTransfer(List<Country> countryList) {
         coins.keySet().forEach(this::distribute);
         if (coins.size() == countryList.size())
             isComplete = true;

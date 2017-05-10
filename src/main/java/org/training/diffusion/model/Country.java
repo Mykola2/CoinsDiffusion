@@ -1,4 +1,4 @@
-package model;
+package org.training.diffusion.model;
 
 import lombok.Data;
 
@@ -32,13 +32,13 @@ public class Country {
     }
 
     public void startSimulator(List<Country> countries) {
-        if (!checkIfComplete()) {
+
+        cities.forEach(city -> city.dailyTransfer(countries));
+        if (checkIfComplete()) {
+            isComplete = true;
+        } else {
             days++;
         }
-        else {
-            isComplete = true;
-        }
-        cities.forEach(city -> city.dailyTrarnsfer(countries));
 
 
     }

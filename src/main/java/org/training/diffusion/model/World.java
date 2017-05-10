@@ -1,4 +1,4 @@
-package model;
+package org.training.diffusion.model;
 
 import lombok.Data;
 
@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 @Data
 public class World {
     List<Country> countries = new ArrayList<>();
-
+    List<City> allCities = new ArrayList<>();
 
     public void addCountry(Country country) {
         countries.add(country);
     }
 
     public void createRoutes() {
-        List<City> allCities = countries.stream()
+        allCities = countries.stream()
                 .flatMap(country -> country.getCities().stream())
                 .collect(Collectors.toList());
 
@@ -48,12 +48,16 @@ public class World {
     public void simulate() {
         while (true) {
             countries.forEach(c -> c.startSimulator(countries));
-            if(countries.stream().allMatch(Country::getIsComplete)){
+            if (checkIfSumulateComplete()) {
                 break;
             }
         }
-
         countries.forEach(country -> System.out.println(country.getName() + ":" + country.getDays()));
+        System.out.println();
+    }
+
+    private Boolean checkIfSumulateComplete() {
+        return countries.stream().allMatch(Country::getIsComplete);
     }
 
 }
