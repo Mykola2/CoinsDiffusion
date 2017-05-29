@@ -25,8 +25,8 @@ public class Main {
     private static List<World> createWorld(String fileName) {
         List<World> testCases = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line = br.readLine();
-            while (!"0".equals(line)) {
+            String line;
+            while (!"0".equals(line = br.readLine())) {
                 int countryNum = Integer.parseInt(line);
                 World world = new World();
                 for (int i = 0; i < countryNum; i++) {
@@ -41,7 +41,6 @@ public class Main {
                 }
                 world.createRoutes();
                 testCases.add(world);
-                line = br.readLine();
             }
 
         } catch (IOException e) {
