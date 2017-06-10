@@ -47,32 +47,60 @@ public class City {
 
     private void distribute(String country) {
         int countryCoins = coins.get(country);
-        int coinsToTranfer = countryCoins / 1000;
+        int coinsToTransfer = countryCoins / 1000;
         if (westN != null) {
-            westN.takeTransfer(country, coinsToTranfer);
-            coins.put(country, coins.get(country) - coinsToTranfer);
+            westN.takeTransfer(country, coinsToTransfer);
+            coins.put(country, coins.get(country) - coinsToTransfer);
         }
         if (eastN != null) {
-            eastN.takeTransfer(country, coinsToTranfer);
-            coins.put(country, coins.get(country) - coinsToTranfer);
+            eastN.takeTransfer(country, coinsToTransfer);
+            coins.put(country, coins.get(country) - coinsToTransfer);
         }
         if (northN != null) {
-            northN.takeTransfer(country, coinsToTranfer);
-            coins.put(country, coins.get(country) - coinsToTranfer);
+            northN.takeTransfer(country, coinsToTransfer);
+            coins.put(country, coins.get(country) - coinsToTransfer);
         }
         if (southN != null) {
-            southN.takeTransfer(country, coinsToTranfer);
-            coins.put(country, coins.get(country) - coinsToTranfer);
+            southN.takeTransfer(country, coinsToTransfer);
+            coins.put(country, coins.get(country) - coinsToTransfer);
         }
     }
 
 
     public void takeTransfer(String country, Integer amount) {
         if (amount != 0) {
-            if (coins.containsKey(country)) {
-                coins.put(country, coins.get(country) + amount);
-            } else
-                coins.put(country, amount);
+            coins.put(country, coins.containsKey(country) ? (coins.get(country) + amount) : amount);
         }
+    }
+
+    public void createRouteWithOtherCity(City anotherCity) {
+        if (checkWest(anotherCity)) {
+            this.setWestN(anotherCity);
+        }
+        if (checkEast(anotherCity)) {
+            this.setEastN(anotherCity);
+        }
+        if (checkNorth(anotherCity)) {
+            this.setNorthN(anotherCity);
+        }
+        if (checkSouth(anotherCity)) {
+            this.setSouthN(anotherCity);
+        }
+    }
+
+    private boolean checkSouth(City anotherCity) {
+        return (this.getX() == anotherCity.getX()) && (this.getY() - 1 == anotherCity.getY());
+    }
+
+    private boolean checkNorth(City anotherCity) {
+        return (this.getX() == anotherCity.getX()) && (this.getY() + 1 == anotherCity.getY());
+    }
+
+    private boolean checkEast(City anotherCity) {
+        return (this.getX() + 1 == anotherCity.getX()) && (this.getY() == anotherCity.getY());
+    }
+
+    private boolean checkWest(City anotherCity) {
+        return (this.getX() - 1 == anotherCity.getX()) && (this.getY() == anotherCity.getY());
     }
 }

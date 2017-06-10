@@ -23,24 +23,9 @@ public class World {
                 .flatMap(country -> country.getCities().stream())
                 .collect(Collectors.toList());
 
-
-        //non-optimized n^2 traverse
-        //todo: optimize
         for (City city : allCities) {
-            for (City anotherCity : allCities) {
-                if ((city.getX() - 1 == anotherCity.getX()) && (city.getY() == anotherCity.getY())) {
-                    city.setWestN(anotherCity);
-                }
-                if ((city.getX() + 1 == anotherCity.getX()) && (city.getY() == anotherCity.getY())) {
-                    city.setEastN(anotherCity);
-                }
-                if ((city.getX() == anotherCity.getX()) && (city.getY() + 1 == anotherCity.getY())) {
-                    city.setNorthN(anotherCity);
-                }
-                if ((city.getX() == anotherCity.getX()) && (city.getY() - 1 == anotherCity.getY())) {
-                    city.setSouthN(anotherCity);
-                }
-            }
+            for (City otherCity : allCities)
+                city.createRouteWithOtherCity(otherCity);
         }
 
     }
